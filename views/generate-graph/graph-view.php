@@ -1,0 +1,77 @@
+<div id="container"></div>
+
+<?php
+
+	$this->registerJsFile(
+
+		'@web/js/highchart/highcharts.js',
+
+		['depends'=>[\yii\web\JqueryAsset::className()]]
+
+	);
+
+
+	$this->registerJsFile(
+
+		'@web/js/highchart/exporting.js',
+
+		['depends'=>[\yii\web\JqueryAsset::className()]]
+
+	);
+
+
+
+	$script = <<< JS
+
+		$(document).ready(function(){
+
+			Highcharts.chart('container', {
+			    chart: {
+			        type: 'column'
+			    },
+			    title: {
+			        text: 'Stock Film By Category'
+			    },
+			    subtitle: {
+			        text: '-'
+			    },
+			    xAxis: {
+			        categories: [
+			            'film'
+			        ],
+			        crosshair: true
+			    },
+			    yAxis: {
+			        min: 0,
+			        title: {
+			            text: 'Total Stock'
+			        }
+			    },
+			    // tooltip: {
+			    //     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+			    //     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+			    //         '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+			    //     footerFormat: '</table>',
+			    //     shared: true,
+			    //     useHTML: true
+			    // },
+			    plotOptions: {
+			        column: {
+			            pointPadding: 0.2,
+			            borderWidth: 0
+			        }
+			    },
+			    series: $stock_json
+			});
+
+
+		});
+JS;
+
+
+	$this->registerJs($script);
+
+	//echo "<pre>";
+	// print_r($script);
+	// echo "</pre>";
+?>
